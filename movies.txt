@@ -1,0 +1,50 @@
+{
+TITLE
+Kiki's Delivery Service
+RATING
+G
+YEAR
+1989
+QUANTITY
+10
+}
+{
+TITLE
+My Neighbor Totoro
+RATING
+G
+YEAR
+1988
+QUANTITY
+11
+}
+{
+TITLE
+Castle in the Sky
+RATING
+PG
+YEAR
+1986
+QUANTITY
+13
+}
+{
+TITLE
+Spirited Away
+RATING
+PG
+YEAR
+2001
+QUANTITY
+14
+}
+{
+TITLE
+Princess Mononoke
+RATING
+PG-13
+YEAR
+1997
+QUANTITY
+10
+}
