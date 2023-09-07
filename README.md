@@ -1,1 +1,2 @@
-# CS200---PROJECT
+# CS200 - Movie Library Project
+Coded with C++
