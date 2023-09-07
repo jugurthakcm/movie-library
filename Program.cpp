@@ -1,13 +1,10 @@
-#include "Program.h"
-#include "Functions.h"
+#include "Program.hpp"
+#include "Functions.hpp"
 #include <fstream>
 #include <iomanip>
 #include <iostream>
-#include <vector>
 
 using namespace std;
-
-vector<Movie> movies;
 
 void Program::Setup() {
   ifstream input;
@@ -117,20 +114,12 @@ void Program::Menu_ViewMovies() {
   cout << "AVAILABLE MOVIES" << endl;
   cout << endl;
 
-  cout << setw(10) << "ID" << setw(30) << "TITLE" << setw(10) << "RATING"
-       << setw(10) << "QUANTITY" << setw(10) << "STATUS" << endl;
+  DisplayMovies();
 
-  for (size_t i = 0; i < movies.size(); i++) {
-    cout << setw(10) << movies[i].getId() << setw(30)
-         << movies[i].getMovieTitle() << setw(10) << movies[i].getRating()
-         << setw(10) << movies[i].getQuantity() << setw(10)
-         << movies[i].getYear() << endl;
-  }
   cout << endl;
 }
 
-
-//Checkout Process
+// Checkout Process
 void Program::Menu_Checkout() {
   float priceNewFilm = 4.00;
   float priceOldFilm = 2.00;
@@ -140,53 +129,37 @@ void Program::Menu_Checkout() {
   int amountOfDaysRented = 0;
   int quantity = 0;
   int currentYear = 2001;
+  int choiceID;
+  bool quit = false;
 
   cout << "CHECK OUT CUSTOMER" << endl;
   cout << endl;
 
-  cout << "CHECK OUT how many copies of: " << m_movie0.getMovieTitle() << " ";
-  quantity = GetChoice(0, m_movie0.getQuantity());
-  m_movie0.setQuantity(m_movie0.getQuantity() - quantity);
-  if (m_movie0.getYear() == 2001) {
-    amounttNewFilmRentals += quantity;
-  } else {
-    amountOldFilmRentals += quantity;
-  }
+  DisplayMovies();
+  cout << endl;
 
-  cout << "CHECK OUT how many copies of: " << m_movie1.getMovieTitle() << " ";
-  quantity = GetChoice(0, m_movie1.getQuantity());
-  m_movie1.setQuantity(m_movie1.getQuantity() - quantity);
-  if (m_movie1.getYear() == 2001) {
-    amounttNewFilmRentals += quantity;
-  } else {
-    amountOldFilmRentals += quantity;
-  }
+  /* *********************************************/
+  while (!quit) {
+    cout << "ENTER MOVIE ID TO CHECK OUT, OR 0 TO FINISH: ";
 
-  cout << "CHECK OUT how many copies of: " << m_movie2.getMovieTitle() << " ";
-  quantity = GetChoice(0, m_movie2.getQuantity());
-  m_movie2.setQuantity(m_movie2.getQuantity() - quantity);
-  if (m_movie2.getYear() == 2001) {
-    amounttNewFilmRentals += quantity;
-  } else {
-    amountOldFilmRentals += quantity;
-  }
-
-  cout << "CHECK OUT how many copies of: " << m_movie3.getMovieTitle() << " ";
-  quantity = GetChoice(0, m_movie3.getQuantity());
-  m_movie3.setQuantity(m_movie3.getQuantity() - quantity);
-  if (m_movie3.getYear() == 2001) {
-    amounttNewFilmRentals += quantity;
-  } else {
-    amountOldFilmRentals += quantity;
-  }
-
-  cout << "CHECK OUT how many copies of: " << m_movie4.getMovieTitle() << " ";
-  quantity = GetChoice(0, m_movie4.getQuantity());
-  m_movie4.setQuantity(m_movie4.getQuantity() - quantity);
-  if (m_movie4.getYear() == 2001) {
-    amounttNewFilmRentals += quantity;
-  } else {
-    amountOldFilmRentals += quantity;
+    cin >> choiceID;
+    if (choiceID == 0) {
+      quit = true;
+    } else {
+      for (size_t i = 0; i < movies.size(); i++) {
+        if (movies[i].getId() == choiceID) {
+          if (movies[i].getYear() == currentYear) {
+            amounttNewFilmRentals++;
+            cout << "Added movie \"" << movies[i].getMovieTitle() << "\""
+                 << endl;
+          } else {
+            amountOldFilmRentals++;
+            cout << "Added movie \"" << movies[i].getMovieTitle() << "\""
+                 << endl;
+          }
+        }
+      }
+    }
   }
 
   cout << endl;
@@ -211,58 +184,36 @@ void Program::Menu_Checkout() {
   cout << endl;
 }
 
-
-//Checkin Process
+// Checkin Process
 void Program::Menu_Checkin() {
   int placeholder = 0;
+  bool quit = false;
+  int choiceID;
 
   cout << "CHECK IN MOVIE" << endl;
   cout << endl;
 
-  cout << "CHECK IN how many copies of \"Kiki's Delivery Service\"? ";
-  cin >> placeholder;
-  while (placeholder < 0) {
-    cout << "Checkin ammount needs to be 0 or higher. ";
-    cout << "CHECK IN how many copies? ";
-    cin >> placeholder;
-  }
-  m_movie0.setQuantity(m_movie0.getQuantity() + placeholder);
+  DisplayMovies();
 
-  cout << "CHECK IN how many copies of \"My Neighbor Totoro\"? ";
-  cin >> placeholder;
-  while (placeholder < 0) {
-    cout << "Checkin ammount needs to be 0 or higher. ";
-    cout << "CHECK IN how many copies? ";
-    cin >> placeholder;
-  }
-  m_movie1.setQuantity(m_movie1.getQuantity() + placeholder);
+  cout << endl;
 
-  cout << "CHECK IN how many copies of \"Castle in the Sky\"? ";
-  cin >> placeholder;
-  while (placeholder < 0) {
-    cout << "Checkin ammount needs to be 0 or higher. ";
-    cout << "CHECK IN how many copies? ";
-    cin >> placeholder;
-  }
-  m_movie2.setQuantity(m_movie2.getQuantity() + placeholder);
+  while (!quit) {
+    cout << "ENTER MOVIE ID TO CHECK OUT, OR 0 TO FINISH: ";
 
-  cout << "CHECK IN how many copies of \"Spirited Away\"? ";
-  cin >> placeholder;
-  while (placeholder < 0) {
-    cout << "Checkin ammount needs to be 0 or higher. ";
-    cout << "CHECK IN how many copies? ";
-    cin >> placeholder;
+    cin >> choiceID;
+    if (choiceID == 0) {
+      quit = true;
+    } else {
+      for (size_t i = 0; i < movies.size(); i++) {
+        if (movies[i].getId() == choiceID) {
+          cout << "How many movies are you checking in? ";
+          cin >> placeholder;
+          movies[i].setQuantity(movies[i].getQuantity() + placeholder);
+          cout << placeholder << " movies added" << endl;
+        }
+      }
+    }
   }
-  m_movie3.setQuantity(m_movie3.getQuantity() + placeholder);
-
-  cout << "CHECK IN how many copies of \"Princess Mononoke\"? ";
-  cin >> placeholder;
-  while (placeholder < 0) {
-    cout << "Checkin ammount needs to be 0 or higher. ";
-    cout << "CHECK IN how many copies? ";
-    cin >> placeholder;
-  }
-  m_movie4.setQuantity(m_movie4.getQuantity() + placeholder);
 
   cout << endl;
   cout << "Inventory Updated" << endl;

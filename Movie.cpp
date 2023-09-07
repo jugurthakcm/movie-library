@@ -1,4 +1,4 @@
-#include "Movie.h"
+#include "Movie.hpp"
 
 // Implement movie functions
 void Movie::Setup(int id, string movieTitle, string rating, int year,
